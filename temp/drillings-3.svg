@@ -1,0 +1,16 @@
+<svg width="324" height="461" viewBox="0 0 324 461" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="41" y="41" width="282" height="419" fill="#E0E0E0" stroke="#2E2E2E" stroke-width="2"/>
+<rect x="125.787" y="0.5" width="95.5502" height="29" fill="white" stroke="#00B152"/>
+<circle cx="296" cy="274" r="5.5" transform="rotate(-180 296 274)" fill="white" stroke="#00B152"/>
+<circle cx="296" cy="274" r="2" transform="rotate(-180 296 274)" fill="#00B152"/>
+<circle cx="296" cy="224" r="5.5" transform="rotate(-180 296 224)" fill="white" stroke="#00B152"/>
+<circle cx="296" cy="224" r="2" transform="rotate(-180 296 224)" fill="#00B152"/>
+<circle cx="296" cy="324" r="5.5" transform="rotate(-180 296 324)" fill="white" stroke="#00B152"/>
+<circle cx="296" cy="324" r="2" transform="rotate(-180 296 324)" fill="#00B152"/>
+<path d="M296 224L293.113 229L298.887 229L296 224ZM296 274L298.887 269L293.113 269L296 274ZM295.5 228.5L295.5 269.5L296.5 269.5L296.5 228.5L295.5 228.5Z" fill="#2E2E2E"/>
+<path d="M296 274L293.113 279L298.887 279L296 274ZM296 324L298.887 319L293.113 319L296 324ZM295.5 278.5L295.5 319.5L296.5 319.5L296.5 278.5L295.5 278.5Z" fill="#2E2E2E"/>
+<path d="M296 324L293.113 329L298.887 329L296 324ZM296 460L298.887 455L293.113 455L296 460ZM295.5 328.5L295.5 455.5L296.5 455.5L296.5 328.5L295.5 328.5Z" fill="#2E2E2E"/>
+<path d="M296 300L279 300" stroke="#2E2E2E"/>
+<path d="M296 349L279 349" stroke="#2E2E2E"/>
+<rect x="0.5" y="286.5" width="85" height="29" transform="rotate(-90 0.5 286.5)" fill="white" stroke="#00B152"/>
+</svg>
