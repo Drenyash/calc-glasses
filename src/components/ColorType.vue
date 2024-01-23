@@ -3,26 +3,23 @@ export default {
   name: 'ColorType',
   data() {
     return {
-      opened: false,
     };
   },
   methods: {
     processingType(evt) {
-      const target = evt.target
-      if (target.checked) {
-        const data = {
-          key: 'processingType',
-          value: target.defaultValue,
-        };
-        this.$store.commit('setProcessingType', data);
+      const target = evt.target;
+      let key = null;
+      if (target.getAttribute('data-index') === 0) {
+        key = target.value
       } else {
-        const data = {
-          key: 'processingType',
-          value: null,
-        };
-        this.$store.commit('removeProcessingType', data);
+        key = target.value
       }
-      console.log('data', this.$store.getters.getProcessingType)
+      const data = {
+        key: key,
+        value: !!target.checked,
+      };
+      this.$store.commit('setProcessingType', data);
+      this.$store.dispatch('sendClearData');
     }
   },
   computed: {}
@@ -36,9 +33,9 @@ export default {
   <ul class="f-color-type">
     <li class="f-color-type__item">
       <label class="f-color-type__element">
-        <input class="f-color-type__input" type="checkbox" name="colorType" value="grinding" data-index="0"
+        <input class="f-color-type__input" type="checkbox" name="colorType" value="chamfer" data-index="0"
                @change="processingType">
-        <span>С шлифовкой</span>
+        <span>Со снятием фаски</span>
       </label>
     </li>
     <li class="f-color-type__item">

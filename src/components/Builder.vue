@@ -6,44 +6,14 @@ export default {
     description: String,
     isCentered: Boolean,
     currentMilling: Number,
-    millingsList: Array,
   },
   data() {
     return {
       type: 'materials',
       renderComponent: true,
-      currentElement: null,
     };
   },
   methods: {
-    setValue(event, key, index) {
-      const data = {
-        val: +event.target.value,
-        key,
-        index
-      }
-      this.$store.commit('setTabArray', data);
-    },
-    getInputValue(key, index) {
-      const arr = this.$store.getters.getTabArray(key, this.currentMilling - 1);
-      return arr[index];
-    },
-    setInputValue(event) {
-      this.currentElement = event.target;
-      let index = this.$store.getters.getCurrentMilling('milling', event.target.dataset.millingType - 1)['content'].length - 1;
-      event.target.setAttribute('data-index', index)
-
-      const data = {
-        val: +event.target.value,
-        key: event.target.getAttribute('data-key'),
-        millingType: event.target.dataset.millingType - 1,
-        index: +event.target.getAttribute('data-index')
-      }
-
-      console.log('Проверка data', data)
-
-      this.$store.commit('setTabArray', data);
-    },
     forceRerender() {
       this.renderComponent = false;
       this.$nextTick(() => this.renderComponent = true);
@@ -90,24 +60,6 @@ export default {
       get() {
         return this.$store.getters.getTabValueMilling('currentValue');
       },
-    },
-    millings: {
-      get() {
-        return this.$store.getters.getTabArray('milling');
-      },
-    },
-    engraving: {
-      get() {
-        return this.$store.getters.getTabValue('engraving');
-      },
-      set(newValue) {
-        const data = {
-          key: 'engraving',
-          value: newValue
-        }
-        this.$store.commit('setTabValue', data);
-        this.$store.dispatch('sendClearData');
-      }
     },
     sendData() {
       this.$store.dispatch('sendClearData');
@@ -161,39 +113,6 @@ export default {
         <template v-if="selectedMaterial">
           <image preserveAspectRatio="none " :href="selectedMaterial.img" x="50" y="52" width="264" height="398"
                  object-fit="contain"/>
-        </template>
-        <!-- Graver -->
-
-        <template v-if="engraving">
-          <mask id="mask0_5050_199" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="51" y="51" width="264"
-                height="398">
-            <path d="M314.5 51.5L314.5 448.5L51.5 448.5L51.5 51.5001L183 51.5L314.5 51.5Z"
-                  fill="url(#paint0_linear_5050_199)" stroke="#E5E5E5"/>
-          </mask>
-          <g mask="url(#mask0_5050_199)">
-            <path d="M57.041 -87.981L352.963 211.575" stroke="white" stroke-width="2"/>
-            <path d="M116.816 -116.881L386.609 156.224" stroke="white" stroke-width="2"/>
-            <path d="M7.00195 -46.9878L329.669 279.642" stroke="white" stroke-width="2"/>
-            <path d="M49.0371 91.6846L345.197 391.482" stroke="white" stroke-width="2"/>
-            <path d="M49.0371 182.674L345.197 482.471" stroke="white" stroke-width="2"/>
-            <path d="M49.0371 273.501L345.197 573.299" stroke="white" stroke-width="2"/>
-            <path d="M49.0371 364.329L345.197 664.126" stroke="white" stroke-width="2"/>
-            <path d="M336.57 -87.981L40.6487 211.575" stroke="white" stroke-width="2"/>
-            <path d="M276.793 -116.881L7.00061 156.224" stroke="white" stroke-width="2"/>
-            <path d="M386.609 -46.9878L63.9427 279.642" stroke="white" stroke-width="2"/>
-            <path d="M344.574 91.6846L48.4142 391.482" stroke="white" stroke-width="2"/>
-            <path d="M344.574 182.674L48.4142 482.471" stroke="white" stroke-width="2"/>
-            <path d="M344.574 273.501L48.4142 573.299" stroke="white" stroke-width="2"/>
-            <path d="M344.574 364.329L48.4142 664.126" stroke="white" stroke-width="2"/>
-          </g>
-          <defs>
-            <linearGradient id="paint0_linear_5050_199" x1="315" y1="-46.2822" x2="-131.125" y2="133.026"
-                            gradientUnits="userSpaceOnUse">
-              <stop stop-color="#C5C4C1"/>
-              <stop offset="0.489583" stop-color="#FCFBF8" stop-opacity="0.510417"/>
-              <stop offset="1" stop-color="#C5C4C1"/>
-            </linearGradient>
-          </defs>
         </template>
       </svg>
     </div>

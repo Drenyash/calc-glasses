@@ -35,7 +35,7 @@
             </div>
             <div class="f-footer-section" v-for="(item, index) in items" :key="index">
                 <p class="f-description">
-                    Стоимость {{ index + 1 }}-го фасада:
+                    Стоимость {{ index + 1 }}-го зеркала:
                 </p>
                 <p class="f-info">
                     {{ item.price }} руб.

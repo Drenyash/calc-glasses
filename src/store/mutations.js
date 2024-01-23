@@ -6,7 +6,6 @@ function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
 export default {
     init(state) {
         if (!state.items.length) {
@@ -31,27 +30,28 @@ export default {
     createTab(state) {
         state.items.push({
             price: 0,
-            width: 0,
-            height: 0,
+            width: 100,
+            height: 100,
             quantity: 0,
-            processingType: [],
+            polishing: false,
+            chamfer: false,
             allowMillings: [],
-            milling: [
+            drilling: [
                 {
                     millingType: 0,
-                    content: [],
+                    count: 0,
                 },
                 {
                     millingType: 1,
-                    content: [],
+                    count: 0,
                 },
                 {
                     millingType: 2,
-                    content: [],
+                    count: 0,
                 }
             ],
             drawingFiles: [],
-            selectedMaterial: null,
+            id: null,
             maxValues: 10,
             currentValue: 0,
             message: ''
@@ -78,49 +78,32 @@ export default {
         state.activeTab = val.value;
     },
     setDrawingFiles(state, data) {
-        state.items[state.activeTab].drawingFiles.push(data)
+        state.items[state.activeTab].drawingFiles.push(data);
+        state.files.push(data.file)
     },
     removeDrawingFiles(state, idx) {
         if (idx) {
-            state.items[state.activeTab].drawingFiles.splice(state.items[state.activeTab].drawingFiles.indexOf(idx.id), 1);
+            state.items[state.activeTab].drawingFiles.splice(state.items[state.activeTab].drawingFiles.indexOf(idx), 1);
         } else {
             state.items[state.activeTab].drawingFiles = [];
         }
     },
     setTabValue(state, data) {
-        if (data.key !== 'drilling' && data.key !== 'milling') {
+        if (data.key !== 'drilling') {
             state.items[state.activeTab][data.key] = data.value;
         } else {
             if (data.millingType) {
                 let arr = [];
-                console.log(state.items[state.activeTab][data.key][data.millingType - 1]['content'])
-                state.items[state.activeTab][data.key][data.millingType - 1]['content'].length = data.value;
+                state.items[state.activeTab][data.key][data.millingType - 1]['count'] = data.value;
                 for (let i = 0; i < state.items[state.activeTab][data.key].length; i++) {
-                    arr.push(state.items[state.activeTab][data.key][i]['content'].length)
+                    arr.push(state.items[state.activeTab][data.key][i]['count'])
                 }
                 state.items[state.activeTab].currentValue = arr.reduce((acc, curr) => acc + curr);
-
-                console.log(state.items[state.activeTab][data.key])
             }
         }
     },
-    setMillingData(state, data) {
-        state.items[state.activeTab]['millingData'].push(data.element)
-    },
     setProcessingType(state, data) {
-        state.items[state.activeTab][data.key].push(data.value);
-    },
-    removeProcessingType(state, data) {
-        state.items[state.activeTab][data.key].splice(state.items[state.activeTab][data.key].indexOf(data.value), 1);
-    },
-    setTabArray(state, data) {
-        if (state.items[state.activeTab][data.key][data.millingType]['content']) {
-            state.items[state.activeTab][data.key][data.millingType]['content'][data.index] = data.val;
-        }
-        console.log(state.items[state.activeTab][data.key])
-        // if (state.items[state.activeTab][data.key][data.millingType]['content']) {
-        //     state.items[state.activeTab][data.key][data.millingType]['content'][data.index] = data.val;
-        // }
+        state.items[state.activeTab][data.key] = data.value;
     },
     setPrice(state, data) {
         state.items.forEach((item, index) => {
@@ -151,7 +134,5 @@ export default {
     },
     setFile(state, payload) {
         state.items[state.activeTab].file = payload;
-
-        console.log(state);
     }
 }

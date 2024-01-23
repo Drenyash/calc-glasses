@@ -35,21 +35,19 @@ export default {
       minValue: 0,
       maxValue: 10,
       currentMilling: 1,
-      millingsList: [],
     };
   },
   computed: {
     activeTab() {
       return this.$store.getters["getActiveTab"];
     },
+    getSizes() {
+      return this.$store.getters.getSizes
+    }
   },
   methods: {
     changeMilling(value) {
       this.currentMilling = value;
-    },
-    updateMillingList(millingIdx) {
-      this.millingsList.push(millingIdx);
-      console.log('millingList', this.millingsList)
     },
   },
   mounted() {
@@ -76,10 +74,12 @@ export default {
           </div>
           <div class="columns mb-40">
             <div class="columns__col columns__col--4">
-              <InputNumber title="Высота (мм)" value="height"></InputNumber>
+              <InputNumber title="Высота (мм)" value="height" v-bind:minValue="100"
+                           v-bind:maxValue="getSizes ? getSizes.height : 100"></InputNumber>
             </div>
             <div class="columns__col columns__col--4">
-              <InputNumber title="Ширина (мм)" value="width"></InputNumber>
+              <InputNumber title="Ширина (мм)" value="width" v-bind:minValue="100"
+                           v-bind:maxValue="getSizes ? getSizes.width : 100"></InputNumber>
             </div>
             <div class="columns__col columns__col--4">
               <InputNumber title="Кол-во (шт)" value="quantity"></InputNumber>
@@ -89,25 +89,22 @@ export default {
             <div class="columns__col columns__col--4">
               <ModalProfiles></ModalProfiles>
             </div>
-            <div class="columns__col columns__col--4">
+            <div class="columns__col columns__col--8">
               <ColorType></ColorType>
             </div>
           </div>
           <div class="columns">
             <div class="columns__col columns__col--8">
               <InputNumber title="Диаметр сверления D 5 мм" v-bind:minValue="this.minValue"
-                           v-bind:maxValue="this.maxValue" value="milling" :millingType="1"
-                           @updateMillingList="updateMillingList" @changeMilling="changeMilling"></InputNumber>
+                           v-bind:maxValue="this.maxValue" value="drilling" :millingType="1" @changeMilling="changeMilling"></InputNumber>
             </div>
             <div class="columns__col columns__col--8">
               <InputNumber title="Диаметр сверления D 8 мм" v-bind:minValue="this.minValue"
-                           v-bind:maxValue="this.maxValue" value="milling" :millingType="2"
-                           @updateMillingList="updateMillingList" @changeMilling="changeMilling"></InputNumber>
+                           v-bind:maxValue="this.maxValue" value="drilling" :millingType="2" @changeMilling="changeMilling"></InputNumber>
             </div>
             <div class="columns__col columns__col--8">
               <InputNumber title="Диаметр сверления D 26 мм" v-bind:minValue="this.minValue"
-                           v-bind:maxValue="this.maxValue" value="milling" :millingType="3"
-                           @updateMillingList="updateMillingList" @changeMilling="changeMilling"></InputNumber>
+                           v-bind:maxValue="this.maxValue" value="drilling" :millingType="3" @changeMilling="changeMilling"></InputNumber>
             </div>
           </div>
         </div>
@@ -116,9 +113,10 @@ export default {
             <Title title="Визуализация зеркала" description="может отличаться от изготовленного варианта"
                    :isCentered="true"></Title>
           </div>
-          <Builder :millingsList="millingsList" :currentMilling="currentMilling"></Builder>
+          <Builder :currentMilling="currentMilling"></Builder>
         </div>
       </div>
+        <Input fieldKey="message" title="Комментарий к заказу"></Input>
     </div>
     <div class="f-item__comment">
       <File></File>

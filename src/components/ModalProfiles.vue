@@ -11,7 +11,7 @@ export default {
     toggleMaterial() {
       if (this.selectedMaterial) {
         const data = {
-          key: 'selectedMaterial',
+          key: 'id',
           value: null
         };
         this.$store.commit('setTabValue', data);
@@ -21,7 +21,7 @@ export default {
     },
     selectMaterial(item) {
       const data = {
-        key: 'selectedMaterial',
+        key: 'id',
         value: +item.id
       };
       this.$store.commit('setTabValue', data);
@@ -38,7 +38,7 @@ export default {
     },
     loading() {
       return this.$store.getters.getValue('loading');
-    }
+    },
   },
   mounted() {
   }

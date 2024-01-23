@@ -3,7 +3,7 @@ import {createImage} from "./createImage";
 
 export default {
     getData() {
-        axios.get('https://baltlaminat.ru/api/glasses/GetDataFull')
+        axios.get('/api/glasses/GetDataFull')
             .then(response => {
                 console.log('Все данные', response.data);
                 this.commit('setData', response.data);
@@ -18,10 +18,12 @@ export default {
 
         const formData = new FormData();
 
+        console.log('тест отправки на сервер', json)
+
         formData.append('data', json);
         formData.append('user', user);
 
-        axios.post('https://baltlaminat.ru/api/calculateGlasses', formData, {
+        axios.post('/api/calculateGlasses/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -47,14 +49,17 @@ export default {
 
         const formData = new FormData();
 
+        console.log('Otpravka', store.state.files)
+
         formData.append('data', json);
+        formData.append('files', store.state.files)
         formData.append('user', user);
 
-        axios.post('https://baltlaminat.ru/api/sendDataGlasses/index.php', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value)
+        }
+
+        axios.post('/api/sendDataGlasses/', formData)
             .then((response) => {
                 console.log(response);
                 this.commit('setButtonMessage', 'Отправлено!');

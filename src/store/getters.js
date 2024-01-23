@@ -6,12 +6,12 @@ export default {
         return state[key];
     },
     getTabValue: (state) => (key, value) => {
-        if (key !== 'drilling' && key !== 'milling') {
+        if (key !== 'drilling') {
             return state.items[state.activeTab][key];
         } else {
             if (state.items[state.activeTab][key]) {
                 if (value) {
-                    return state.items[state.activeTab][key][value - 1]['content'].length;
+                    return state.items[state.activeTab][key][value - 1]['count'];
                 } else {
                     return state.items[state.activeTab][key].length
                 }
@@ -21,17 +21,11 @@ export default {
     getCurrentValue: (state) => {
       return state.items[state.activeTab].currentValue
     },
-    getCurrentMilling: (state) => (key, millingIdx) => {
-      return state.items[state.activeTab][key][millingIdx]
-    },
     getTabValueMilling: (state) => (key) => {
         return state.items[state.activeTab][key]
     },
     getItems: (state) => (key) => {
         return state[key];
-    },
-    getTabArray: (state) => (key, millingType) => {
-        return state.items[state.activeTab][key][millingType]['content'];
     },
     getActiveTab(state) {
         return state.activeTab;
@@ -39,15 +33,20 @@ export default {
     getDrawingFiles(state) {
         return state.items[state.activeTab].drawingFiles
     },
-    getProcessingType(state) {
-        return state.items[state.activeTab].processingType;
-    },
     getMaterialById(state) {
-        const materialId = state.items[state.activeTab].selectedMaterial;
+        const materialId = state.items[state.activeTab].id;
         try {
             return state.materials[materialId];
         } catch (e) {
             return null;
         }
     },
+    getSizes(state) {
+        const materialId = state.items[state.activeTab].id;
+        try {
+            return state.materials[materialId];
+        } catch (e) {
+            return null;
+        }
+    }
 }

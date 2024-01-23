@@ -9,12 +9,6 @@ export default {
     millingType: Number,
     setMaxValue: Function,
     changeMilling: Function,
-    updateMillingList: Function,
-  },
-  data() {
-    return {
-      currentElement: null,
-    }
   },
   computed: {
     inputValue: {
@@ -28,12 +22,11 @@ export default {
       set(newValue) {
         if (this.minValue && newValue <= this.minValue) {
           newValue = this.minValue;
-        } else if (newValue + this.$store.getters.getCurrentValue > this.maxValue) {
-          newValue = this.maxValue - this.$store.getters.getCurrentValue;
+        } else if (newValue + this.getTotalValues > this.maxValue && newValue !== this.inputValue + 1) {
+          if (newValue > this.inputValue) {
+            newValue = this.maxValue - this.getTotalValues;
+          }
         }
-
-        console.log('current', this.inputValue)
-
         const data = {
           key: this.value,
           millingType: this.millingType,
@@ -48,7 +41,10 @@ export default {
     },
     sendData() {
       this.$store.dispatch('sendClearData');
-    }
+    },
+    getTotalValues() {
+      return this.$store.getters.getCurrentValue
+    },
   },
   methods: {
     increase(val) {
@@ -58,15 +54,13 @@ export default {
       } else if (val && this.inputValue === this.maxValue) {
         return false;
       } else {
-        console.log('this.inputValue', this.inputValue)
         let data = {}
         data = {
           key: this.value,
           value: (val) ? this.$store.getters.getCurrentValue < 10 ? this.inputValue += 1 : null : this.inputValue -= 1,
         }
-        console.log('this.inputValue', this.inputValue)
-        this.$store.commit('setTabValue', data);
         this.$store.dispatch('sendClearData');
+        this.$store.commit('setTabValue', data);
       }
     }
   },
@@ -81,7 +75,7 @@ export default {
       {{ title }}
     </p>
     <div class="f-input__wrapper">
-      <input type="number" class="f-input__field" @input="this.currentElement = $event" v-bind:disabled="loading" v-model="inputValue" v-on:blur="sendData">
+      <input type="number" class="f-input__field" :min="this.minValue" :max="this.maxValue" v-bind:disabled="loading" v-model="inputValue" v-on:blur="sendData">
       <div class="f-input__toolbar">
         <button class="f-input__button" @click="increase(true)">
           <svg class="f-input__icon" viewBox="0 0 10 5">

@@ -33,28 +33,35 @@ export default {
   methods: {
     clearAllFiles() {
       this.$store.commit('removeDrawingFiles')
+      this.$store.dispatch('sendClearData');
     },
     clearFile(file) {
       this.$store.commit('removeDrawingFiles', file)
+      this.$store.dispatch('sendClearData');
     },
     updateFiles(evt) {
+      const reader = new FileReader();
+      reader.readAsDataURL(evt.target.files[0]);
+      reader.onload = () => {
+        const data = {
+          id: Date.now(),
+          text: evt.target.files[0].name,
+          file: reader.result
+        }
 
-      const data = {
-        id: Date.now(),
-        text: evt.target.files[0].name,
-      }
-
-      evt.target.value = '';
-
-      this.$store.commit('setDrawingFiles', data)
-      console.log(this.$store.getters.getDrawingFiles)
+        this.$store.commit('setDrawingFiles', data)
+        this.$store.dispatch('sendClearData');
+        evt.target.value = '';
+      };
+      reader.onerror = function (error) {
+        console.log('Error: ', error);
+      };
     },
     getFiles() {
       return this.$store.getters.getDrawingFiles
     }
   },
-  computed: {
-  }
+  computed: {}
 }
 </script>
 
@@ -63,6 +70,7 @@ export default {
   &__input {
     display: none;
   }
+
   &__label {
     &-text {
       color: #00b152;
@@ -76,6 +84,7 @@ export default {
       padding-left: 0;
     }
   }
+
   &__btn {
     color: #ff3131;
     display: inline-flex;
@@ -98,6 +107,7 @@ export default {
     background: none;
     transition: all .3s;
     cursor: pointer;
+
     &-icon {
       display: block;
       width: 14px;
