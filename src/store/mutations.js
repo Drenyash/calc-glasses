@@ -33,8 +33,28 @@ export default {
             width: 100,
             height: 100,
             quantity: 0,
-            polishing: false,
-            chamfer: false,
+            processings: {
+                "type-a": {
+                    polishing: false,
+                    chamfer: false,
+                    grinding: false,
+                },
+                "type-b": {
+                    polishing: false,
+                    chamfer: false,
+                    grinding: false,
+                },
+                "type-c": {
+                    polishing: false,
+                    chamfer: false,
+                    grinding: false,
+                },
+                "type-d": {
+                    polishing: false,
+                    chamfer: false,
+                    grinding: false,
+                },
+            },
             allowMillings: [],
             drilling: [
                 {
@@ -103,7 +123,7 @@ export default {
         }
     },
     setProcessingType(state, data) {
-        state.items[state.activeTab][data.key] = data.value;
+        state.items[state.activeTab][data.key][data.name][data.value] = data.status;
     },
     setPrice(state, data) {
         state.items.forEach((item, index) => {

@@ -8,14 +8,14 @@ import Select from './Select.vue';
 import Tabs from './Tabs.vue';
 import Title from './Title.vue';
 import Input from "./Input.vue";
-import ColorType from "@/components/ColorType.vue";
 import File from "@/components/File.vue";
+import Parties from "@/components/Parties.vue";
 
 export default {
   name: 'Item',
   components: {
+    Parties,
     File,
-    ColorType,
     Builder,
     ModalProfiles,
     Footer,
@@ -89,8 +89,8 @@ export default {
             <div class="columns__col columns__col--4">
               <ModalProfiles></ModalProfiles>
             </div>
-            <div class="columns__col columns__col--8">
-              <ColorType></ColorType>
+            <div class="columns__col columns__col--12">
+              <Parties></Parties>
             </div>
           </div>
           <div class="columns">
